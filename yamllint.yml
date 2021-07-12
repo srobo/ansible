@@ -1,0 +1,15 @@
+extends: default
+
+ignore: |
+  galaxy_roles
+  galaxy_collections
+  env
+
+rules:
+  document-start: disable
+  truthy: disable
+  quoted-strings:
+    quote-type: double
+    required: only-when-needed
+  line-length:
+    max: 160
