@@ -3,3 +3,5 @@
     - geerlingguy.ntp
     - geerlingguy.security
     - bee
+    # TODO: make this only on the one actual website proxy server
+    - srobo-nginx
