@@ -1,8 +1,8 @@
-# Server web
+# Student Robotics' Ansible
 
 [![CI](https://github.com/RealOrangeOne/srobo-server-web/actions/workflows/ci.yml/badge.svg)](https://github.com/RealOrangeOne/srobo-server-web/actions/workflows/ci.yml)
 
-Web server for [Student Robotics](https://studentrobotics.org).
+This is the Ansible config for our servers.
 
 ## Dependencies
 
