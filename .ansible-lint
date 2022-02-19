@@ -3,7 +3,14 @@ skip_list:
   - 401
   - 301
   - 503
+  - meta-no-info
+  - role-name
 
 exclude_paths:
   - galaxy_roles/
   - galaxy_collections/
+
+mock_roles:
+  - geerlingguy.certbot
+  - geerlingguy.ntp
+  - geerlingguy.security
