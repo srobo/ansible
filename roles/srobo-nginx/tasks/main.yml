@@ -15,7 +15,7 @@
   template:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
-    mode: '0644'
+    mode: "0644"
   notify:
     reload nginx
 
@@ -23,7 +23,7 @@
   copy:
     src: files/dhparam.txt
     dest: /etc/nginx/dhparam.txt
-    mode: '0644'
+    mode: "0644"
   notify:
     reload nginx
 
