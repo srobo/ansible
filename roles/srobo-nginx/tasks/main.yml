@@ -14,6 +14,14 @@
   notify:
     reload nginx
 
+- name: Copy dhparam.txt
+  copy:
+    src: files/dhparam.txt
+    dest: /etc/nginx/dhparam.txt
+    mode: '0644'
+  notify:
+    reload nginx
+
 - name: Test nginx configuration file is valid
   command: /usr/sbin/nginx -t -c /etc/nginx/nginx.conf
 
