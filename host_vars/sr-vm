@@ -1,0 +1,9 @@
+---
+# This is the dev VM created by Vagrant.
+
+canonical_hostname: sr-vm
+
+add_hsts_header: false
+certbot_create_if_missing: false
+certbot_certs:
+- domains: []
