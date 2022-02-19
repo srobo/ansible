@@ -2,7 +2,6 @@
   roles:
     - geerlingguy.ntp
     - geerlingguy.security
-    - geerlingguy.certbot
     - bee
     # TODO: make this only on the one actual website proxy server
     - srobo-nginx
