@@ -2,6 +2,7 @@ collections:
   - community.general
 
 roles:
+  # Adding a role? Remember to also add it to .ansible-lint's list of mocks
   - src: geerlingguy.firewall
   - src: geerlingguy.ntp
   - src: geerlingguy.security
