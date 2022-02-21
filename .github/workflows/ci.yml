@@ -19,6 +19,14 @@ jobs:
           cache: pip
           cache-dependency-path: dev-requirements.txt
 
+      - name: Cache galaxy packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            galaxy_roles
+            galaxy_collections
+          key: galaxy-${{ runner.os }}-py3.9-${{ hashFiles('galaxy-requirements.yml') }}
+
       - name: Install dependencies
         run: ./scripts/setup.sh
 
