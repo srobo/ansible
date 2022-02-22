@@ -15,3 +15,10 @@ firewall_allowed_tcp_ports:
  - "80"
  - "443"
 firewall_log_dropped_packets: false
+
+
+# For now all these users get sudo. If we start adding other users we should
+# probably break this into groups and do finer grained permissions.
+users:
+ - jhoward
+ - plaw

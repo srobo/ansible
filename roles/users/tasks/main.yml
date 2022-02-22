@@ -1,0 +1,32 @@
+---
+- name: Create users
+  user:
+    name: "{{ item }}"
+    groups:
+      - sudo
+      - systemd-journal
+    append: true
+    shell: /bin/bash
+    state: present
+  with_items:
+    "{{ users }}"
+
+- name: Create .ssh directory
+  file:
+    state: directory
+    path: /home/{{ item }}/.ssh
+    mode: "0700"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+  with_items:
+    "{{ users }}"
+
+- name: ~/.ssh/authorized_keys
+  copy:
+    src: authorized_keys/{{ item }}
+    dest: /home/{{ item }}/.ssh/authorized_keys
+    mode: "0600"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+  with_items:
+    "{{ users }}"
