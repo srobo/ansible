@@ -30,3 +30,13 @@
     group: "{{ item }}"
   with_items:
     "{{ users }}"
+
+- name: Configure passwordless sudo
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: ^%sudo
+    line: "%sudo	ALL=(ALL) NOPASSWD: ALL"   # noqa:no-tabs
+    validate: visudo --check --file %s
+  with_items:
+    "{{ users }}"
