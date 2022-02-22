@@ -1,9 +1,10 @@
 ---
-canonical_hostname: studentrobotics.org
+canonical_hostname: beta.studentrobotics.org
 
 add_hsts_header: true
 certbot_create_if_missing: true
 certbot_certs:
 - domains:
-    - srobo.org
-    - studentrobotics.org
+    - beta.studentrobotics.org
+    - monty.studentrobotics.org
+    # TODO: srobo.org and www. etc.
