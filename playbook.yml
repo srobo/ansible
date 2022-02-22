@@ -1,8 +1,10 @@
 - hosts: all
   roles:
+    # Users first, so that when root SSH is disabled we still have a way to
+    # access the machine.
+    - users
     - geerlingguy.firewall
     - geerlingguy.ntp
     - geerlingguy.security
     - bee
     - srobo-nginx
-    - users
