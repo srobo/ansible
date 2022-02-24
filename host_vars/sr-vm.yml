@@ -8,4 +8,4 @@ add_hsts_header: false
 certbot_testmode: true
 certbot_create_if_missing: false
 certbot_certs:
-- domains: []
+  - domains: []

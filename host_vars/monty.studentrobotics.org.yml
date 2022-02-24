@@ -5,10 +5,10 @@ secondary_hostnames: beta.studentrobotics.org
 add_hsts_header: true
 certbot_create_if_missing: true
 certbot_certs:
-- domains:
-    - studentrobotics.org
-    - www.studentrobotics.org
-    - srobo.org
-    - www.srobo.org
-    - beta.studentrobotics.org
-    - monty.studentrobotics.org
+  - domains:
+      - studentrobotics.org
+      - www.studentrobotics.org
+      - srobo.org
+      - www.srobo.org
+      - beta.studentrobotics.org
+      - monty.studentrobotics.org
