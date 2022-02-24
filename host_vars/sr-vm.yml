@@ -2,6 +2,7 @@
 # This is the dev VM created by Vagrant.
 
 canonical_hostname: sr-vm
+secondary_hostnames:
 
 add_hsts_header: false
 certbot_testmode: true
