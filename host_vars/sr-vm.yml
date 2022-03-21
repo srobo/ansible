@@ -1,19 +1,11 @@
 ---
 # This is the dev VM created by Vagrant.
 
-# canonical_hostname: sr-vm
+canonical_hostname: sr-vm
 secondary_hostnames:
 
 add_hsts_header: false
-
-# certbot_create_if_missing: false
-# certbot_certs:
-# - domains: []
-
-canonical_hostname: pjcl.mooo.com
-
-certbot_create_if_missing: true
+certbot_testmode: true
+certbot_create_if_missing: false
 certbot_certs:
-  - domains:
-      - pjcl.mooo.com
-      - srobo.mooo.com
+  - domains: []
