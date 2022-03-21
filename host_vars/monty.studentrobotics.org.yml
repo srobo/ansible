@@ -1,6 +1,6 @@
 ---
 canonical_hostname: studentrobotics.org
-secondary_hostnames: beta.studentrobotics.org
+secondary_hostnames:
 
 add_hsts_header: true
 certbot_create_if_missing: true
@@ -10,5 +10,4 @@ certbot_certs:
       - www.studentrobotics.org
       - srobo.org
       - www.srobo.org
-      - beta.studentrobotics.org
       - monty.studentrobotics.org
