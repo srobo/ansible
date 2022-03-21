@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
     v.cpus = 4
   end
 
-  config.vm.network "private_network", ip: "192.168.42.42"
+  config.vm.network "private_network", ip: "192.168.56.56"
   config.vm.hostname = "sr-vm.local"
 
   # Required so that apt cache is populated before ansible runs

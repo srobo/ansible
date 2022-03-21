@@ -18,7 +18,7 @@ You may wish to configure a hosts entry for easily accessing the VM, if so add
 the following line to `/etc/hosts` on the *host* machine:
 
 ```
-192.168.42.42  sr-vm sr-vm.local
+192.168.56.56  sr-vm sr-vm.local
 ```
 
 ## Deployment
