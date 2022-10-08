@@ -1,4 +1,5 @@
-- hosts: all
+- name: Common baseline
+  hosts: all
   roles:
     # Users first, so that when root SSH is disabled we still have a way to
     # access the machine.
@@ -8,6 +9,7 @@
     - geerlingguy.security
     - bee
 
-- hosts: webproxies
+- name: Web proxies
+  hosts: webproxies
   roles:
     - srobo-nginx
