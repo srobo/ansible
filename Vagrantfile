@@ -24,4 +24,14 @@ Vagrant.configure(2) do |config|
     web.vm.network "private_network", ip: "192.168.56.56"
     web.vm.hostname = "sr-proxy.local"
   end
+
+  config.vm.define "sr-compsvc" do |compsrv|
+    compsrv.vm.box = "ubuntu/jammy64"
+
+    # This name is what's looked up in the Ansible host_vars.
+    compsrv.vm.define "sr-compsvc"
+
+    compsrv.vm.network "private_network", ip: "192.168.56.57"
+    compsrv.vm.hostname = "sr-compsvc.local"
+  end
 end
