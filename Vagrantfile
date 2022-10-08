@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
     ansible.become = true  # Run ansible as root
 
     ansible.groups = {
-      "web-proxies" => ["sr-proxy"],
+      "webproxies" => ["sr-proxy"],
     }
   end
 

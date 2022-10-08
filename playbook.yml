@@ -8,6 +8,6 @@
     - geerlingguy.security
     - bee
 
-- hosts: web-proxies
+- hosts: webproxies
   roles:
     - srobo-nginx
