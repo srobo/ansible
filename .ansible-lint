@@ -3,6 +3,7 @@ skip_list:
   - 401
   - 301
   - 503
+  - fqcn-builtins
   - meta-no-info
   - role-name
 
