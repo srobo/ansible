@@ -19,6 +19,7 @@ the following line to `/etc/hosts` on the *host* machine:
 
 ```
 192.168.56.56  sr-proxy sr-proxy.local
+192.168.56.57  sr-compsvc sr-compsvc.local
 ```
 
 ## Deployment
