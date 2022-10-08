@@ -7,4 +7,7 @@
     - geerlingguy.ntp
     - geerlingguy.security
     - bee
+
+- hosts: web-proxies
+  roles:
     - srobo-nginx
