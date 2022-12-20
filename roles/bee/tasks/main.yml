@@ -5,7 +5,7 @@
     mode: "644"
 
 # https://blog.ktz.me/remove-ubuntu-motd-spam-at-login/
-- name: remove ubuntu motd spam
+- name: Remove ubuntu motd spam
   file:
     path: /etc/update-motd.d/{{ item }}
     state: absent
