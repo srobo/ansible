@@ -6,8 +6,8 @@ PATH=${PWD}/env/bin:${PATH}
 
 set -x
 
-yamllint -sc yamllint.yml $PWD
+yamllint --strict --config-file yamllint.yml $PWD
 
-ansible-lint playbook.yml -p -c .ansible-lint
+ansible-lint playbook.yml --parseable --config-file .ansible-lint
 
 ansible-playbook playbook.yml --syntax-check
