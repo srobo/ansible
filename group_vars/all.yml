@@ -29,4 +29,5 @@ firewall_log_dropped_packets: false
 # probably break this into groups and do finer grained permissions.
 users:
  - jhoward
+ - jsedensmith
  - plaw
