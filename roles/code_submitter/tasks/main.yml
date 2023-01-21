@@ -1,0 +1,80 @@
+- name: Install virtualenv system dependencies
+  apt:
+    pkg:
+      - python3-virtualenv
+      - python3-wheel
+
+- name: Create install directory
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: www-data
+
+- name: Download
+  git:
+    repo: https://github.com/PeterJCLaw/code-submitter
+    dest: "{{ install_dir }}"
+    force: true
+  notify:
+    restart code-submitter
+  register: code_submitter_repo
+  become_user: www-data
+
+- name: Install configuration
+  copy:
+    src: code-submitter.env
+    dest: "{{ install_dir }}/.env"
+    mode: "0600"
+    owner: www-data
+  notify:
+    restart code-submitter
+
+- name: Install deploy requirements
+  copy:
+    src: deploy-requirements.txt
+    dest: "{{ install_dir }}/deploy-requirements.txt"
+    mode: "0600"
+    owner: www-data
+  notify:
+    restart code-submitter
+  register: deploy_requirements
+
+- name: Link credentials
+  file:
+    src: /srv/secrets/code-submitter-credentials.yaml
+    dest: /etc/code-submitter-credentials.yaml
+    state: link
+    owner: www-data
+    force: true  # `src` may not exist at this point
+
+- name: Install virtual environment
+  pip:
+    virtualenv: "{{ venv_dir }}"
+    requirements: "{{ deploy_requirements.dest }}"
+  notify:
+    restart code-submitter
+  become_user: www-data
+
+- name: Install systemd service
+  template:
+    src: code-submitter.service
+    dest: /etc/systemd/system/code-submitter.service
+  notify:
+    restart code-submitter
+
+- name: Install database
+  shell:
+    argv:
+      - "{{ venv_dir }}/bin/alembic"
+      - upgrade
+      - head
+    chdir: /srv/code-submitter
+  environment:
+    PYTHONPATH: /srv/code-submitter
+  become_user: www-data
+
+- name: Enable service
+  service:
+    name: code-submitter
+    state: started
+    enabled: true

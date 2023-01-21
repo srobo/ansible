@@ -13,3 +13,8 @@
   hosts: webproxies
   roles:
     - srobo-nginx
+
+- name: Competitor services
+  hosts: competitor-svcs
+  roles:
+    - code_submitter

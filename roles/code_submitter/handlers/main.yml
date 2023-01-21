@@ -1,0 +1,4 @@
+- name: restart code-submitter
+  service:
+    name: code-submitter
+    state: restarted

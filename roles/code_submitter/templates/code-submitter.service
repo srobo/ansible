@@ -1,0 +1,15 @@
+[Unit]
+Description=Code Submission Service
+After=network.target
+
+[Service]
+User=www-data
+
+Type=simple
+
+WorkingDirectory={{ install_dir }}
+RuntimeDirectory=code-submitter
+ExecStart={{ venv_dir }}/bin/uvicorn code_submitter.server:app --uds /var/run/code-submitter/code-submitter.socket --forwarded-allow-ips='*' --root-path /code-submitter
+
+[Install]
+WantedBy=multi-user.target
