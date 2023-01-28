@@ -14,6 +14,7 @@ Vagrant.configure(2) do |config|
 
     ansible.groups = {
       "webproxies" => ["sr-proxy"],
+      "competitor-svcs" => ["sr-compsvc"]
     }
   end
 
