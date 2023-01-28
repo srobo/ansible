@@ -1,0 +1,7 @@
+---
+canonical_hostname: competitorsvcs.studentrobotics.org
+secondary_hostnames:
+
+certbot_certs:
+  - domains:
+      - "{{ canonical_hostname }}"

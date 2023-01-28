@@ -2,7 +2,6 @@
 canonical_hostname: studentrobotics.org
 secondary_hostnames:
 
-add_hsts_header: true
 certbot_create_if_missing: true
 certbot_certs:
   - domains:

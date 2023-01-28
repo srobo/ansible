@@ -17,4 +17,5 @@
 - name: Competitor services
   hosts: competitor-svcs
   roles:
+    - competitor-services-nginx
     - code_submitter
