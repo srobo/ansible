@@ -40,10 +40,11 @@
   register: deploy_requirements
 
 - name: Create credentials
-  file:
-    path: "{{ secrets_dir }}/code-submitter-credentials.yaml"
-    state: touch
+  copy:
+    content: ""
+    dest: "{{ secrets_dir }}/code-submitter-credentials.yaml"
     owner: www-data
+    force: false
   notify:
     restart code-submitter
 
@@ -54,6 +55,7 @@
   notify:
     restart code-submitter
   become_user: www-data
+  when: deploy_requirements.changed or code_submitter_repo.changed
 
 - name: Install systemd service
   template:
@@ -81,6 +83,7 @@
   environment:
     PYTHONPATH: /srv/code-submitter
   become_user: www-data
+  when: code_submitter_repo.changed
 
 - name: Enable service
   service:
