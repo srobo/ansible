@@ -62,6 +62,15 @@
   notify:
     restart code-submitter
 
+- name: Install nginx config
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/sites-enabled/code-submitter
+    mode: "0644"
+    validate: /usr/sbin/nginx -t -c %s
+  notify:
+    reload nginx
+
 - name: Install database
   shell:
     argv:
