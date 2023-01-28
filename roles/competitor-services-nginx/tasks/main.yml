@@ -16,7 +16,7 @@
     path: /etc/nginx/sites-enabled/default
     state: absent
   notify:
-    reload nginx
+    Reload nginx
 
 - name: Copy dhparam.txt
   copy:
@@ -24,7 +24,7 @@
     dest: /etc/nginx/dhparam.txt
     mode: "0644"
   notify:
-    reload nginx
+    Reload nginx
 
 - name: Copy our configuration
   template:
@@ -33,7 +33,7 @@
     mode: "0644"
     validate: /usr/sbin/nginx -t -c %s
   notify:
-    reload nginx
+    Reload nginx
 
 - name: Ensure nginx is running
   service:

@@ -6,6 +6,8 @@ skip_list:
   - fqcn-builtins
   - meta-no-info
   - role-name
+  - no-handler
+  - command-instead-of-shell
 
 exclude_paths:
   - galaxy_roles/

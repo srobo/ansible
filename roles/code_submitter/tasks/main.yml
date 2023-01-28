@@ -9,14 +9,16 @@
     path: "{{ install_dir }}"
     state: directory
     owner: www-data
+    mode: "755"
 
 - name: Download
   git:
     repo: https://github.com/PeterJCLaw/code-submitter
     dest: "{{ install_dir }}"
     force: true
+    version: master
   notify:
-    restart code-submitter
+    Restart code-submitter
   register: code_submitter_repo
   become_user: www-data
 
@@ -27,7 +29,7 @@
     mode: "0600"
     owner: www-data
   notify:
-    restart code-submitter
+    Restart code-submitter
 
 - name: Install deploy requirements
   copy:
@@ -36,7 +38,7 @@
     mode: "0600"
     owner: www-data
   notify:
-    restart code-submitter
+    Restart code-submitter
   register: deploy_requirements
 
 - name: Create credentials
@@ -45,15 +47,16 @@
     dest: "{{ secrets_dir }}/code-submitter-credentials.yaml"
     owner: www-data
     force: false
+    mode: "0600"
   notify:
-    restart code-submitter
+    Restart code-submitter
 
 - name: Install virtual environment
   pip:
     virtualenv: "{{ venv_dir }}"
     requirements: "{{ deploy_requirements.dest }}"
   notify:
-    restart code-submitter
+    Restart code-submitter
   become_user: www-data
   when: deploy_requirements.changed or code_submitter_repo.changed
 
@@ -61,8 +64,9 @@
   template:
     src: code-submitter.service
     dest: /etc/systemd/system/code-submitter.service
+    mode: "0644"
   notify:
-    restart code-submitter
+    Restart code-submitter
 
 - name: Install nginx config
   template:
@@ -71,7 +75,7 @@
     mode: "0644"
     validate: /usr/sbin/nginx -t -c %s
   notify:
-    reload nginx
+    Reload nginx
 
 - name: Install database
   shell:
