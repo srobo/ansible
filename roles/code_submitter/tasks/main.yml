@@ -21,7 +21,7 @@
   become_user: www-data
 
 - name: Install configuration
-  copy:
+  template:
     src: code-submitter.env
     dest: "{{ install_dir }}/.env"
     mode: "0600"
@@ -39,13 +39,13 @@
     restart code-submitter
   register: deploy_requirements
 
-- name: Link credentials
+- name: Create credentials
   file:
-    src: /srv/secrets/code-submitter-credentials.yaml
-    dest: /etc/code-submitter-credentials.yaml
-    state: link
+    path: "{{ secrets_dir }}/code-submitter-credentials.yaml"
+    state: touch
     owner: www-data
-    force: true  # `src` may not exist at this point
+  notify:
+    restart code-submitter
 
 - name: Install virtual environment
   pip:
