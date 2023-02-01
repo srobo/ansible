@@ -73,7 +73,6 @@
     src: nginx.conf
     dest: /etc/nginx/locations-enabled/code-submitter
     mode: "0644"
-    validate: /usr/sbin/nginx -t -c %s
   notify:
     Reload nginx
 
