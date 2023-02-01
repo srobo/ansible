@@ -11,12 +11,11 @@
     pkg: ssl-cert
   when: not certbot_create_if_missing
 
-- name: Remove default site
+- name: Create locations-enabled directory
   file:
-    path: /etc/nginx/sites-enabled/default
-    state: absent
-  notify:
-    Reload nginx
+    path: /etc/nginx/locations-enabled
+    state: directory
+    mode: "0755"
 
 - name: Copy dhparam.txt
   copy:
