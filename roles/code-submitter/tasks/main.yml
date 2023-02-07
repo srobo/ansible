@@ -58,7 +58,7 @@
   notify:
     Restart code-submitter
   become_user: www-data
-  when: deploy_requirements.changed or code_submitter_repo.changed
+  when: deploy_requirements.changed or code_submitter_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
 
 - name: Install systemd service
   template:
@@ -86,7 +86,7 @@
   environment:
     PYTHONPATH: /srv/code-submitter
   become_user: www-data
-  when: code_submitter_repo.changed
+  when: code_submitter_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
 
 - name: Enable service
   service:
