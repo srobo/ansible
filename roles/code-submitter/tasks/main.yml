@@ -77,7 +77,7 @@
     Reload nginx
 
 - name: Install database
-  shell:
+  shell:  # noqa: command-instead-of-shell - We need this to use `environment`
     argv:
       - "{{ venv_dir }}/bin/alembic"
       - upgrade
