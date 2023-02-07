@@ -16,7 +16,7 @@
     - srobo-nginx
 
 - name: Competitor services
-  hosts: competitor_svcs
+  hosts: competitorsvcs
   roles:
     - competitor-services-nginx
     - code-submitter
