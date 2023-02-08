@@ -5,9 +5,10 @@ certbot_auto_renew_hour: "3"
 certbot_auto_renew_minute: "30"
 certbot_auto_renew_options: --quiet --no-self-upgrade --pre-hook "systemctl stop nginx" --post-hook "systemctl start nginx"
 certbot_admin_email: infrastructure-team@studentrobotics.org
+certbot_create_if_missing: true
 certbot_create_standalone_stop_services:
  - nginx
-certbot_create_if_missing: true
+
 
 # Override serving of the root url to be the competition mode homepage instead
 # of the normal one.
