@@ -31,3 +31,5 @@ users:
  - jhoward
  - jsedensmith
  - plaw
+
+secrets_dir: /srv/secrets

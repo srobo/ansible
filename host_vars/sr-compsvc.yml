@@ -3,3 +3,6 @@
 
 canonical_hostname: sr-compsvc
 secondary_hostnames:
+
+add_hsts_header: false
+certbot_create_if_missing: false

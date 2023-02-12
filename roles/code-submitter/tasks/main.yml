@@ -1,0 +1,95 @@
+- name: Install virtualenv system dependencies
+  apt:
+    pkg:
+      - python3-virtualenv
+      - python3-wheel
+
+- name: Create install directory
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: www-data
+    mode: "755"
+
+- name: Download
+  git:
+    repo: https://github.com/PeterJCLaw/code-submitter
+    dest: "{{ install_dir }}"
+    force: true
+    version: b3b20f4a1f710a6a01ab72c1735ac0d254e831d9
+  notify:
+    Restart code-submitter
+  register: code_submitter_repo
+  become_user: www-data
+
+- name: Install configuration
+  template:
+    src: code-submitter.env
+    dest: "{{ install_dir }}/.env"
+    mode: "0600"
+    owner: www-data
+  notify:
+    Restart code-submitter
+
+- name: Install deploy requirements
+  copy:
+    src: deploy-requirements.txt
+    dest: "{{ install_dir }}/deploy-requirements.txt"
+    mode: "0600"
+    owner: www-data
+  notify:
+    Restart code-submitter
+  register: deploy_requirements
+
+- name: Create credentials
+  copy:
+    content: ""
+    dest: "{{ secrets_dir }}/code-submitter-credentials.yaml"
+    owner: www-data
+    force: false
+    mode: "0600"
+  notify:
+    Restart code-submitter
+
+- name: Install virtual environment
+  pip:
+    virtualenv: "{{ venv_dir }}"
+    requirements: "{{ deploy_requirements.dest }}"
+  notify:
+    Restart code-submitter
+  become_user: www-data
+  when: deploy_requirements.changed or code_submitter_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Install systemd service
+  template:
+    src: code-submitter.service
+    dest: /etc/systemd/system/code-submitter.service
+    mode: "0644"
+  notify:
+    Restart code-submitter
+
+- name: Install nginx config
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/locations-enabled/code-submitter
+    mode: "0644"
+  notify:
+    Reload nginx
+
+- name: Install database
+  shell:  # noqa: command-instead-of-shell - We need this to use `environment`
+    argv:
+      - "{{ venv_dir }}/bin/alembic"
+      - upgrade
+      - head
+    chdir: /srv/code-submitter
+  environment:
+    PYTHONPATH: /srv/code-submitter
+  become_user: www-data
+  when: code_submitter_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Enable service
+  service:
+    name: code-submitter
+    state: started
+    enabled: true

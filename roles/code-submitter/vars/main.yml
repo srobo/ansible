@@ -1,0 +1,2 @@
+install_dir: /srv/code-submitter
+venv_dir: "{{ install_dir }}/venv"
