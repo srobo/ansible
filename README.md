@@ -22,6 +22,10 @@ the following line to `/etc/hosts` on the *host* machine:
 192.168.56.57  sr-compsvc sr-compsvc.local
 ```
 
+Mapping of these development VMs into Ansible's playbooks is handled via the `Vagrantfile`, see e.g: the `ansible.groups` mapping, from which vagrant will build the appropriate ansible inventory. This therefore needs to be manually kept in a state which reflects the production inventory defined by the `hosts` file.
+
+See <https://developer.hashicorp.com/vagrant/docs/provisioning/ansible> for more details on how Vagrant's Ansible provisioner works.
+
 ## Deployment
 
 Deployment is currently manual. Once changes are approved someone with access to
