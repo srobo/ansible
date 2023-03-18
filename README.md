@@ -37,7 +37,7 @@ vagrant provision
 
 ### Accessing the VMs
 
-Should you need **SSH** access to the machines you can do this via `vagrant ssh`.
+Should you need **SSH** access to the machines you can do this via `vagrant ssh <machine-name>`.
 This will log you in as the `vagrant` user, which has passwordless sudo.
 
 You may wish to configure a hosts entry for easily accessing the VM, for example
