@@ -12,7 +12,7 @@ certbot_create_standalone_stop_services:
 
 # Override serving of the root url to be the competition mode homepage instead
 # of the normal one.
-enable_competition_homepage: false
+enable_competition_homepage: true
 
 
 firewall_allowed_tcp_ports:
