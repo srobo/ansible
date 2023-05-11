@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/RealOrangeOne/srobo-server-web/actions/workflows/ci.yml/badge.svg)](https://github.com/RealOrangeOne/srobo-server-web/actions/workflows/ci.yml)
 
-This is the Ansible config for our servers.
+This is the [Ansible](https://docs.ansible.com/) config for our servers.
 
 ## Dependencies
 
