@@ -10,6 +10,10 @@ certbot_create_standalone_stop_services:
  - nginx
 
 
+# We typically only host the public SRComp machine around the time of the
+# competition. It is required for the competition pages, including the
+# competition homepage.
+enable_srcomp_proxy: false
 # Override serving of the root url to be the competition mode homepage instead
 # of the normal one.
 enable_competition_homepage: false
