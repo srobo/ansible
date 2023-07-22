@@ -18,6 +18,9 @@ enable_srcomp_proxy: false
 # of the normal one.
 enable_competition_homepage: false
 
+# We typically only host the competitor services for the duration of the
+# competition year.
+enable_competitor_services_proxy: true
 
 firewall_allowed_tcp_ports:
  - "22"
