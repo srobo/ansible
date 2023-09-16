@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
+          python-version: "3.11"
           cache: pip
           cache-dependency-path: dev-requirements.txt
 
@@ -25,7 +25,7 @@ jobs:
           path: |
             galaxy_roles
             galaxy_collections
-          key: galaxy-${{ runner.os }}-py3.9-${{ hashFiles('galaxy-requirements.yml') }}
+          key: galaxy-${{ runner.os }}-py3.11-${{ hashFiles('galaxy-requirements.yml') }}
 
       - name: Install dependencies
         run: ./scripts/setup.sh
