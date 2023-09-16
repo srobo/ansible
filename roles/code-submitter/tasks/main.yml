@@ -76,7 +76,7 @@
   notify:
     Reload nginx
 
-- name: Install database
+- name: Install database  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
   shell:  # noqa: command-instead-of-shell - We need this to use `environment`
     argv:
       - "{{ venv_dir }}/bin/alembic"
