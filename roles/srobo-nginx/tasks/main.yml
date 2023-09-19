@@ -11,6 +11,23 @@
     pkg: ssl-cert
   when: not certbot_create_if_missing
 
+- name: Create .well-known directory
+  file:
+    path: /var/www/.well-known
+    state: directory
+    owner: www-data
+    mode: "755"
+  notify:
+    Reload nginx
+
+- name: Copy .well-known/mta-sts.txt
+  copy:
+    src: files/well-known-mta-sts.txt
+    dest: /var/www/.well-known/mta-sts.txt
+    mode: "0644"
+  notify:
+    Reload nginx
+
 - name: Copy dhparam.txt
   copy:
     src: files/dhparam.txt
