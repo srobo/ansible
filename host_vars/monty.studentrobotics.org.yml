@@ -11,3 +11,4 @@ certbot_certs:
       - studentrobotics.org
       - www.studentrobotics.org
       - monty.studentrobotics.org
+      - mta-sts.studentrobotics.org
