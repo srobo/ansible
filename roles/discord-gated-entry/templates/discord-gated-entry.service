@@ -1,0 +1,16 @@
+[Unit]
+Description=Discord bot for gated entry
+After=network.target
+
+[Service]
+User=discord
+
+Type=simple
+
+WorkingDirectory={{ install_dir }}
+RuntimeDirectory=discord-gated-entry
+
+ExecStart=/srv/discord-gated-entry/venv/bin/python main.py
+
+[Install]
+WantedBy=multi-user.target

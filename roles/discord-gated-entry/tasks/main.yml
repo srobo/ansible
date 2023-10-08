@@ -1,0 +1,63 @@
+- name: Install virtualenv system dependencies
+  apt:
+    pkg:
+      - python3-virtualenv
+      - python3-wheel
+
+- name: Create user
+  user:
+    name: discord
+    shell: /bin/nologin
+    state: present
+    create_home: false
+
+- name: Create install directory
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: discord
+    mode: "755"
+
+- name: Download
+  git:
+    repo: https://github.com/srobo/discord-gated-entry
+    dest: "{{ install_dir }}"
+    force: true
+    version: 476a9c942f580e2950048c2b95e15429cb0ae33d
+  notify:
+    Restart discord-gated-entry
+  register: discord_gated_entry_repo
+  become_user: discord
+
+- name: Bootstrap environment file
+  copy:
+    content: ""
+    dest: "{{ install_dir }}/.env"
+    force: false
+    mode: "0600"
+    owner: discord
+  notify:
+    Restart discord-gated-entry
+
+- name: Install virtual environment
+  pip:
+    virtualenv: "{{ venv_dir }}"
+    requirements: "{{ install_dir }}/requirements.txt"
+  notify:
+    Restart discord-gated-entry
+  become_user: discord
+  when: discord_gated_entry_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Install systemd service
+  template:
+    src: discord-gated-entry.service
+    dest: /etc/systemd/system/discord-gated-entry.service
+    mode: "0644"
+  notify:
+    Restart discord-gated-entry
+
+- name: Enable service
+  service:
+    name: discord-gated-entry
+    state: started
+    enabled: true
