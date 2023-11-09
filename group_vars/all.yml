@@ -1,4 +1,8 @@
 ---
+# Hostnames which are accepted as valid for this host (and not redirected away
+# from) even though they are not the canonical name.
+secondary_hostnames: []
+
 certbot_auto_renew: true
 certbot_auto_renew_user: root
 certbot_auto_renew_hour: "3"

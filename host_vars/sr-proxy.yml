@@ -2,7 +2,6 @@
 # This is a dev VM created by Vagrant.
 
 canonical_hostname: sr-proxy
-secondary_hostnames:
 
 add_hsts_header: false
 certbot_testmode: true
