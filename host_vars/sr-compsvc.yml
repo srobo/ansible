@@ -3,6 +3,9 @@
 
 canonical_hostname: sr-compsvc
 secondary_hostnames:
+  # See explanation in host_vars/competitorsvcs.studentrobotics.org.yml for why
+  # we include the proxy hostname here.
+  - sr-proxy
 
 add_hsts_header: false
 certbot_create_if_missing: false
