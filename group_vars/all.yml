@@ -17,7 +17,7 @@ certbot_create_standalone_stop_services:
 # We typically only host the public SRComp machine around the time of the
 # competition. It is required for the competition pages, including the
 # competition homepage.
-enable_srcomp_proxy: false
+enable_srcomp_proxy: true
 srcomp_proxy_hostname: srcomp.studentrobotics.org
 # Override serving of the root url to be the competition mode homepage instead
 # of the normal one.
