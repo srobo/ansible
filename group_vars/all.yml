@@ -34,6 +34,7 @@ firewall_allowed_tcp_ports:
  - "443"
 firewall_ip6_additional_rules:
  # Allow Mythic's managed services access
+ - iptables -A INPUT -p tcp --dport 4949 -s 93.93.128.100/32 -m comment --comment "munin.mythic-beasts.com" -j ACCEPT
  - ip6tables -A INPUT -p tcp --dport 4949 -s 2a00:1098:0:80:1000::100/128 -m comment --comment "munin.mythic-beasts.com" -j ACCEPT
 firewall_log_dropped_packets: false
 
