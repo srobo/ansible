@@ -1,0 +1,4 @@
+- name: Restart discord-logs-uploader
+  service:
+    name: discord-logs-uploader
+    state: restarted

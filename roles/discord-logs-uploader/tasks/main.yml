@@ -1,0 +1,63 @@
+- name: Install virtualenv system dependencies
+  apt:
+    pkg:
+      - python3-virtualenv
+      - python3-wheel
+
+- name: Create user
+  user:
+    name: discord-logs-uploader
+    shell: /bin/nologin
+    state: present
+    create_home: false
+
+- name: Create install directory
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: discord-logs-uploader
+    mode: "755"
+
+- name: Download
+  git:
+    repo: https://github.com/WillB97/discord-logs-uploader
+    dest: "{{ install_dir }}"
+    force: true
+    version: 87002f6472e284d6bd446fadb679d33fca102761
+  notify:
+    Restart discord-logs-uploader
+  register: discord_gated_entry_repo
+  become_user: discord-logs-uploader
+
+- name: Bootstrap environment file
+  copy:
+    content: ""
+    dest: "{{ install_dir }}/.env"
+    force: false
+    mode: "0600"
+    owner: discord-logs-uploader
+  notify:
+    Restart discord-logs-uploader
+
+- name: Install virtual environment
+  pip:
+    virtualenv: "{{ venv_dir }}"
+    requirements: "{{ install_dir }}/requirements.txt"
+  notify:
+    Restart discord-logs-uploader
+  become_user: discord-logs-uploader
+  when: discord_gated_entry_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Install systemd service
+  template:
+    src: discord-logs-uploader.service
+    dest: /etc/systemd/system/discord-logs-uploader.service
+    mode: "0644"
+  notify:
+    Restart discord-logs-uploader
+
+- name: Enable service
+  service:
+    name: discord-logs-uploader
+    state: started
+    enabled: true

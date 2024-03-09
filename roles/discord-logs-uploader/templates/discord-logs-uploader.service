@@ -1,0 +1,16 @@
+[Unit]
+Description=Discord bot for sending logs to teams via their Discord channels
+After=network.target
+
+[Service]
+User=discord-logs-uploader
+
+Type=simple
+
+WorkingDirectory={{ install_dir }}
+RuntimeDirectory=discord-logs-uploader
+
+ExecStart=/srv/discord-logs-uploader/venv/bin/python discord_logs_uploader.py
+
+[Install]
+WantedBy=multi-user.target
