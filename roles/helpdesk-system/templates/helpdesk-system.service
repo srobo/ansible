@@ -1,0 +1,15 @@
+[Unit]
+Description=Helpdesk System
+After=network.target
+
+[Service]
+User=www-data
+
+Type=simple
+
+WorkingDirectory={{ install_dir }}/helpdesk
+RuntimeDirectory=helpdesk-system
+ExecStart={{ venv_dir }}/bin/gunicorn helpdesk.wsgi:app --bind unix:/var/run/helpdesk-system/helpdesk-system.socket --forwarded-allow-ips='*'
+
+[Install]
+WantedBy=multi-user.target

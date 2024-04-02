@@ -1,0 +1,84 @@
+- name: Install virtualenv system dependencies
+  apt:
+    pkg:
+      - python3-virtualenv
+      - python3-wheel
+
+- name: Create install directory
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: www-data
+    mode: "755"
+
+- name: Download
+  git:
+    repo: https://github.com/srobo/helpdesk-system
+    dest: "{{ install_dir }}"
+    force: true
+    version: sr2024 # TODO: Pin to commit
+  notify:
+    Restart helpdesk-system
+  register: helpdesk_system_repo
+  become_user: www-data
+
+# NOTE: It is expected this configuration won't work as-is
+- name: Create configuration if it doesn't exist
+  copy:
+    force: false
+    remote_src: true
+    src: "{{ install_dir }}/helpdesk/helpdesk/configuration.example.py"
+    dest: "{{ install_dir }}/helpdesk/helpdesk/configuration.py"
+    mode: "0600"
+    owner: www-data
+  notify:
+    Restart helpdesk-system
+
+- name: Install deploy requirements
+  copy:
+    src: deploy-requirements.txt
+    dest: "{{ install_dir }}/deploy-requirements.txt"
+    mode: "0600"
+    owner: www-data
+  notify:
+    Restart helpdesk-system
+  register: deploy_requirements
+
+- name: Install virtual environment
+  pip:
+    virtualenv: "{{ venv_dir }}"
+    requirements: "{{ deploy_requirements.dest }}"
+  notify:
+    Restart helpdesk-system
+  become_user: www-data
+  when: deploy_requirements.changed or helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Install systemd service
+  template:
+    src: helpdesk-system.service
+    dest: /etc/systemd/system/helpdesk-system.service
+    mode: "0644"
+  notify:
+    Restart helpdesk-system
+
+- name: Install nginx config
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/locations-enabled/helpdesk-system
+    mode: "0644"
+  notify:
+    Reload nginx
+
+- name: Run migrations  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
+  django_manage:
+    command: migrate --noinput -v0
+    app_path: "{{ install_dir }}/helpdesk"
+    virtualenv: "{{ venv_dir }}"
+  become_user: www-data
+  when: helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Enable service
+  service:
+    name: helpdesk-system
+    state: started
+    enabled: true

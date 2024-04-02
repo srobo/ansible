@@ -21,3 +21,9 @@
     - competitor-services-nginx
     - code-submitter
     - discord-gated-entry
+
+- name: Kit services
+  hosts: kitsvcs
+  roles:
+    - competitor-services-nginx
+    - helpdesk-system

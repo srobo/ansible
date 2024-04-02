@@ -1,0 +1,2 @@
+install_dir: /srv/helpdesk-system
+venv_dir: "{{ install_dir }}/venv"
