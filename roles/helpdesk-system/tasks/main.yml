@@ -71,7 +71,7 @@
 
 - name: Run migrations  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
   community.general.django_manage:
-    command: migrate --noinput -v0
+    command: migrate --noinput
     app_path: "{{ install_dir }}/helpdesk"
     virtualenv: "{{ venv_dir }}"
   become_user: www-data
@@ -79,7 +79,7 @@
 
 - name: Collect static  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
   community.general.django_manage:
-    command: collectstatic --noinput -v0
+    command: collectstatic --noinput
     app_path: "{{ install_dir }}/helpdesk"
     virtualenv: "{{ venv_dir }}"
   become_user: www-data
