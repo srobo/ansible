@@ -13,7 +13,7 @@ certbot_certs:
       - "{{ canonical_hostname }}"
 
 users:
- - jhoward
- - jsedensmith
- - plaw
- - kkwaitek
+  - jhoward
+  - jsedensmith
+  - plaw
+  - kkwaitek

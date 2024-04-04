@@ -16,7 +16,7 @@
     repo: https://github.com/srobo/helpdesk-system
     dest: "{{ install_dir }}"
     force: true
-    version: sr2024 # TODO: Pin to commit
+    version: sr2024  # TODO: Pin to commit
   notify:
     Restart helpdesk-system
   register: helpdesk_system_repo
@@ -70,7 +70,7 @@
     Reload nginx
 
 - name: Run migrations  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
-  django_manage:
+  community.general.django_manage:
     command: migrate --noinput -v0
     app_path: "{{ install_dir }}/helpdesk"
     virtualenv: "{{ venv_dir }}"
@@ -78,7 +78,7 @@
   when: helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
 
 - name: Collect static  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
-  django_manage:
+  community.general.django_manage:
     command: collectstatic --noinput -v0
     app_path: "{{ install_dir }}/helpdesk"
     virtualenv: "{{ venv_dir }}"
