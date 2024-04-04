@@ -34,24 +34,24 @@
   notify:
     Restart helpdesk-system
 
-- name: Install deploy requirements
-  copy:
-    src: deploy-requirements.txt
-    dest: "{{ install_dir }}/deploy-requirements.txt"
-    mode: "0600"
-    owner: www-data
-  notify:
-    Restart helpdesk-system
-  register: deploy_requirements
-
 - name: Install virtual environment
   pip:
     virtualenv: "{{ venv_dir }}"
-    requirements: "{{ deploy_requirements.dest }}"
+    requirements: "{{ install_dir }}/requirements.txt"
   notify:
     Restart helpdesk-system
   become_user: www-data
-  when: deploy_requirements.changed or helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+  when: helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Install deploy requirements
+  pip:
+    # Latest at the time of writing. Don't actually care about the version,
+    # only that we pin it for stability.
+    name: gunicorn==21.2.0
+    virtualenv: "{{ venv_dir }}"
+  notify:
+    Restart helpdesk-system
+  become_user: www-data
 
 - name: Install systemd service
   template:
