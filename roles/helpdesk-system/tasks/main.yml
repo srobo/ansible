@@ -77,6 +77,14 @@
   become_user: www-data
   when: helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
 
+- name: Collect static  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
+  django_manage:
+    command: collectstatic --noinput -v0
+    app_path: "{{ install_dir }}/helpdesk"
+    virtualenv: "{{ venv_dir }}"
+  become_user: www-data
+  when: helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
 - name: Enable service
   service:
     name: helpdesk-system
