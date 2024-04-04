@@ -9,7 +9,7 @@ Type=simple
 
 WorkingDirectory={{ install_dir }}/helpdesk
 RuntimeDirectory=helpdesk-system
-ExecStart={{ venv_dir }}/bin/gunicorn helpdesk.wsgi:application --bind unix:/var/run/helpdesk-system/helpdesk-system.socket --forwarded-allow-ips='*' --access-logfile -
+ExecStart={{ venv_dir }}/bin/gunicorn helpdesk.wsgi:application --bind unix:/var/run/helpdesk-system/helpdesk-system.socket --forwarded-allow-ips='*' --access-logfile - --workers="{{ ansible_processor_nproc * 2 + 1 }}" --max-requests=500 --max-requests-jitter=20 --timeout=30
 
 [Install]
 WantedBy=multi-user.target
