@@ -1,2 +1,3 @@
 install_dir: /srv/helpdesk-system
 venv_dir: "{{ install_dir }}/venv"
+helpdesk_secrets_dir: "{{ secrets_dir }}/helpdesk-system"

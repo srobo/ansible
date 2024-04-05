@@ -11,6 +11,13 @@
     owner: www-data
     mode: "755"
 
+- name: Create secrets directory
+  file:
+    path: "{{ helpdesk_secrets_dir }}"
+    state: directory
+    owner: www-data
+    mode: "0700"
+
 - name: Download
   git:
     repo: https://github.com/srobo/helpdesk-system
@@ -22,15 +29,31 @@
   register: helpdesk_system_repo
   become_user: www-data
 
-# NOTE: It is expected this configuration won't work as-is
-- name: Create configuration if it doesn't exist
+- name: Generate secret key
   copy:
     force: false
-    remote_src: true
-    src: "{{ install_dir }}/helpdesk/helpdesk/configuration.example.py"
+    content: "{{ lookup('community.general.random_string', length=50) }}"
+    dest: "{{ helpdesk_secrets_dir }}/secret-key.txt"
+    owner: www-data
+    mode: "0600"
+  notify:
+    Restart helpdesk-system
+
+- name: Generate volunteer signup code
+  copy:
+    force: false
+    content: "{{ lookup('community.general.random_string', length=10, ignore_similar_chars=True, special=False, upper=False) }}"
+    dest: "{{ helpdesk_secrets_dir }}/volunteer-signup-code.txt"
+    owner: www-data
+    mode: "0600"
+  notify:
+    Restart helpdesk-system
+
+- name: Install configuration
+  template:
+    src: configuration.py
     dest: "{{ install_dir }}/helpdesk/helpdesk/configuration.py"
     mode: "0600"
-    owner: www-data
   notify:
     Restart helpdesk-system
 
