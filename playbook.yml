@@ -25,5 +25,6 @@
 - name: Kit services
   hosts: kitsvcs
   roles:
+    # TODO: Give this role a less machine-specific name
     - competitor-services-nginx
     - helpdesk-system
