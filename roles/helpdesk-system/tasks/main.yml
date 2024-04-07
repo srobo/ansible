@@ -53,6 +53,7 @@
   template:
     src: configuration.py
     dest: "{{ install_dir }}/helpdesk/helpdesk/configuration.py"
+    owner: www-data
     mode: "0600"
   notify:
     Restart helpdesk-system
