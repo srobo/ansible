@@ -23,7 +23,7 @@
     repo: https://github.com/srobo/helpdesk-system
     dest: "{{ install_dir }}"
     force: true
-    version: sr2024  # TODO: Pin to commit
+    version: dfbc34b66bfb6d6c9a811e141d59d81aad46dab1
   notify:
     Restart helpdesk-system
   register: helpdesk_system_repo
