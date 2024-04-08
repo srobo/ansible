@@ -28,6 +28,11 @@ enable_competition_homepage: false
 enable_competitor_services_proxy: true
 competitor_services_proxy_hostname: competitorsvcs.studentrobotics.org
 
+# We typically only host the kit services for the duration of the
+# competition year.
+enable_kit_services_proxy: true
+kit_services_proxy_hostname: kitsvcs.studentrobotics.org
+
 firewall_allowed_tcp_ports:
  - "22"
  - "80"

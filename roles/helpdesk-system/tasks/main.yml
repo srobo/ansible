@@ -1,0 +1,116 @@
+- name: Install virtualenv system dependencies
+  apt:
+    pkg:
+      - python3-virtualenv
+      - python3-wheel
+
+- name: Create install directory
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: www-data
+    mode: "755"
+
+- name: Create secrets directory
+  file:
+    path: "{{ helpdesk_secrets_dir }}"
+    state: directory
+    owner: www-data
+    mode: "0700"
+
+- name: Download
+  git:
+    repo: https://github.com/srobo/helpdesk-system
+    dest: "{{ install_dir }}"
+    force: true
+    version: dfbc34b66bfb6d6c9a811e141d59d81aad46dab1
+  notify:
+    Restart helpdesk-system
+  register: helpdesk_system_repo
+  become_user: www-data
+
+- name: Generate secret key
+  copy:
+    force: false
+    content: "{{ lookup('community.general.random_string', length=50) }}"
+    dest: "{{ helpdesk_secrets_dir }}/secret-key.txt"
+    owner: www-data
+    mode: "0600"
+  notify:
+    Restart helpdesk-system
+
+- name: Generate volunteer signup code
+  copy:
+    force: false
+    content: "{{ lookup('community.general.random_string', length=10, ignore_similar_chars=True, special=False, upper=False) }}"
+    dest: "{{ helpdesk_secrets_dir }}/volunteer-signup-code.txt"
+    owner: www-data
+    mode: "0600"
+  notify:
+    Restart helpdesk-system
+
+- name: Install configuration
+  template:
+    src: configuration.py
+    dest: "{{ install_dir }}/helpdesk/helpdesk/configuration.py"
+    owner: www-data
+    mode: "0600"
+  notify:
+    Restart helpdesk-system
+
+- name: Install virtual environment
+  pip:
+    virtualenv: "{{ venv_dir }}"
+    requirements: "{{ install_dir }}/requirements.txt"
+  notify:
+    Restart helpdesk-system
+  become_user: www-data
+  when: helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Install deploy requirements
+  pip:
+    # Latest at the time of writing. Don't actually care about the version,
+    # only that we pin it for stability.
+    name: gunicorn==21.2.0
+    virtualenv: "{{ venv_dir }}"
+  notify:
+    Restart helpdesk-system
+  become_user: www-data
+
+- name: Install systemd service
+  template:
+    src: helpdesk-system.service
+    dest: /etc/systemd/system/helpdesk-system.service
+    mode: "0644"
+  notify:
+    Restart helpdesk-system
+
+- name: Install nginx config
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/locations-enabled/helpdesk-system
+    mode: "0644"
+  notify:
+    Reload nginx
+
+- name: Run migrations  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
+  community.general.django_manage:
+    command: migrate --noinput
+    app_path: "{{ install_dir }}/helpdesk"
+    virtualenv: "{{ venv_dir }}"
+  become_user: www-data
+  when: helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Collect static  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
+  community.general.django_manage:
+    command: collectstatic --noinput
+    app_path: "{{ install_dir }}/helpdesk"
+    virtualenv: "{{ venv_dir }}"
+  become_user: www-data
+  when: helpdesk_system_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+
+- name: Enable service
+  service:
+    name: helpdesk-system
+    state: started
+    enabled: true
