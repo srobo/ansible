@@ -26,7 +26,7 @@
     version: 476a9c942f580e2950048c2b95e15429cb0ae33d
   notify:
     Restart discord-bot
-  register: discord_gated_entry_repo
+  register: discord_bot_repo
   become_user: discord
 
 - name: Bootstrap environment file
@@ -46,7 +46,7 @@
   notify:
     Restart discord-bot
   become_user: discord
-  when: discord_gated_entry_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+  when: discord_bot_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
 
 - name: Install systemd service
   template:
