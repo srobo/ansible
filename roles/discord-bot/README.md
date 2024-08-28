@@ -1,4 +1,4 @@
-# Discord Gated Entry
+# SR Discord Bot
 
 A Bot for gating entry to a Discord server.
 
