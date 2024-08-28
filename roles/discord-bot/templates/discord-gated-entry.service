@@ -10,7 +10,7 @@ Type=simple
 WorkingDirectory={{ install_dir }}
 RuntimeDirectory=discord-bot
 
-ExecStart=/srv/discord-bot/venv/bin/python src/main.py
+ExecStart={{ venv_dir }}/bin/python src/main.py
 
 [Install]
 WantedBy=multi-user.target
