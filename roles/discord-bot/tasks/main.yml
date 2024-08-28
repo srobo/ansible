@@ -20,12 +20,12 @@
 
 - name: Download
   git:
-    repo: https://github.com/srobo/discord-gated-entry
+    repo: https://github.com/srobo/discord-bot
     dest: "{{ install_dir }}"
     force: true
     version: 476a9c942f580e2950048c2b95e15429cb0ae33d
   notify:
-    Restart discord-gated-entry
+    Restart discord-bot
   register: discord_gated_entry_repo
   become_user: discord
 
@@ -37,27 +37,27 @@
     mode: "0600"
     owner: discord
   notify:
-    Restart discord-gated-entry
+    Restart discord-bot
 
 - name: Install virtual environment
   pip:
     virtualenv: "{{ venv_dir }}"
     requirements: "{{ install_dir }}/requirements.txt"
   notify:
-    Restart discord-gated-entry
+    Restart discord-bot
   become_user: discord
   when: discord_gated_entry_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
 
 - name: Install systemd service
   template:
-    src: discord-gated-entry.service
-    dest: /etc/systemd/system/discord-gated-entry.service
+    src: discord-bot.service
+    dest: /etc/systemd/system/discord-bot.service
     mode: "0644"
   notify:
-    Restart discord-gated-entry
+    Restart discord-bot
 
 - name: Enable service
   service:
-    name: discord-gated-entry
+    name: discord-bot
     state: started
     enabled: true

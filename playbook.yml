@@ -20,7 +20,7 @@
   roles:
     - competitor-services-nginx
     - code-submitter
-    - discord-gated-entry
+    - discord-bot
 
 - name: Kit services
   hosts: kitsvcs

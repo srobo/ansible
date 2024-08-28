@@ -1,4 +1,0 @@
-- name: Restart discord-gated-entry
-  service:
-    name: discord-gated-entry
-    state: restarted

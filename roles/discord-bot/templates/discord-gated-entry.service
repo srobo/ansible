@@ -8,9 +8,9 @@ User=discord
 Type=simple
 
 WorkingDirectory={{ install_dir }}
-RuntimeDirectory=discord-gated-entry
+RuntimeDirectory=discord-bot
 
-ExecStart=/srv/discord-gated-entry/venv/bin/python main.py
+ExecStart=/srv/discord-bot/venv/bin/python src/main.py
 
 [Install]
 WantedBy=multi-user.target

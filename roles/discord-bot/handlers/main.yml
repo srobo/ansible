@@ -1,0 +1,4 @@
+- name: Restart discord-bot
+  service:
+    name: discord-bot
+    state: restarted
