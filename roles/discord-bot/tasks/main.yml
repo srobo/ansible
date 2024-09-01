@@ -23,7 +23,7 @@
     repo: https://github.com/srobo/discord-bot
     dest: "{{ install_dir }}"
     force: true
-    version: ab88b5aa85cfaf649e76708022ecd6bcd62c6e97
+    version: b12c95980701d6c090f7b0da16499475011b0026
   notify:
     Restart discord-bot
   register: discord_bot_repo
@@ -42,7 +42,7 @@
 - name: Install virtual environment
   pip:
     virtualenv: "{{ venv_dir }}"
-    requirements: "{{ install_dir }}/requirements.txt"
+    name: file://{{ install_dir }}
   notify:
     Restart discord-bot
   become_user: discord
