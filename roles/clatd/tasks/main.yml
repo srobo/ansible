@@ -1,0 +1,30 @@
+- name: Download
+  git:
+    repo: https://github.com/toreanderson/clatd
+    dest: "{{ install_dir }}"
+    force: true
+    version: 3ea303b5210bf701df30323933c86f9ffe4d3dd4
+  notify: Restart clatd
+  register: clatd_repo
+
+- name: Install
+  community.general.make:
+    chdir: "{{ install_dir }}"
+    targets:
+      - installdeps  # Install system dependencies
+      - install  # Install clatd
+  when: clatd_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+  notify: Restart clatd
+
+- name: Install configuration
+  copy:
+    content: "{{ clatd_conf }}"
+    dest: /etc/clatd.conf
+    mode: "0644"
+  notify: Restart clatd
+
+- name: Enable service
+  service:
+    name: clatd
+    state: started
+    enabled: true

@@ -20,6 +20,7 @@
   roles:
     - competitor-services-nginx
     - code-submitter
+    - clatd
     - discord-bot
 
 - name: Kit services

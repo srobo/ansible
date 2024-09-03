@@ -1,0 +1,4 @@
+- name: Restart clatd
+  service:
+    name: clatd
+    state: restarted
