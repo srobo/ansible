@@ -11,3 +11,6 @@ add_hsts_header: true
 certbot_certs:
   - domains:
       - "{{ canonical_hostname }}"
+
+# Mythic have additionally routed this IP to the VM
+clat_v6_addr: 2a00:1098:80:bc::2
