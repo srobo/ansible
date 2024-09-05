@@ -1,1 +1,2 @@
 install_dir: /opt/clatd
+installed_version_file: /opt/clatd.version

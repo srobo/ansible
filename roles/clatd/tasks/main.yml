@@ -4,8 +4,19 @@
     dest: "{{ install_dir }}"
     force: true
     version: 3ea303b5210bf701df30323933c86f9ffe4d3dd4
-  notify: Restart clatd
   register: clatd_repo
+  notify: Restart clatd
+
+- name: Get installed version (if installed)
+  slurp:
+    src: "{{ installed_version_file }}"
+  ignore_errors: true  # Ignore if the file is missing, since it's about to be created
+  register: installed_version_slurp
+
+- name: Resolve installed version
+  set_fact:
+    installed_version: "{{ installed_version_slurp.content | b64decode }}"
+  when: not installed_version_slurp.failed
 
 - name: Install
   community.general.make:
@@ -13,8 +24,16 @@
     targets:
       - installdeps  # Install system dependencies
       - install  # Install clatd
-  when: clatd_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
+  when: installed_version is not defined or clatd_repo.after not in installed_version  # noqa: no-handler - Use a handler to ensure execution order
   notify: Restart clatd
+  register: install_clatd
+
+- name: Update installed version
+  copy:
+    content: "{{ clatd_repo.after }}"
+    dest: "{{ installed_version_file }}"
+    mode: "0644"
+  when: install_clatd.changed   # noqa: no-handler - Use a handler to ensure execution order
 
 - name: Install configuration
   copy:
