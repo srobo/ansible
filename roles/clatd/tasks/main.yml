@@ -36,8 +36,8 @@
   when: install_clatd.changed   # noqa: no-handler - Use a handler to ensure execution order
 
 - name: Install configuration
-  copy:
-    content: "{{ clatd_conf }}"
+  template:
+    src: clatd.conf
     dest: /etc/clatd.conf
     mode: "0644"
   notify: Restart clatd

@@ -13,5 +13,4 @@ certbot_certs:
       - "{{ canonical_hostname }}"
 
 # Mythic have additionally routed this IP to the VM
-clatd_conf: |
-  clat-v6-addr=2a00:1098:80:bc::2
+clat_v6_addr: 2a00:1098:80:bc::2
