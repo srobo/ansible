@@ -82,9 +82,9 @@
       - "{{ venv_dir }}/bin/alembic"
       - upgrade
       - head
-    chdir: /srv/code-submitter
+    chdir: "{{ install_dir }}"
   environment:
-    PYTHONPATH: /srv/code-submitter
+    PYTHONPATH: "{{ install_dir }}"
   become_user: www-data
   when: code_submitter_repo.changed  # noqa: no-handler - Use a handler to ensure execution order
 
