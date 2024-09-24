@@ -91,7 +91,7 @@
   environment:
     PYTHONPATH: "{{ install_dir }}"
   become_user: www-data
-  when: |  # noqa: no-handler - Use a handler to ensure execution order
+  when: |
     code_submitter_repo.changed or
     database_file.stat.isreg is not defined or
     not database_file.stat.isreg
