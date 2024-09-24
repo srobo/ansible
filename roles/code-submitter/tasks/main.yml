@@ -77,9 +77,9 @@
     Reload nginx
 
 - name: Check if database exists
-  shell: test -f "{{ install_dir }}/sqlite.db" || echo "Missing"
-  register: detect_database
-  changed_when: detect_database.stdout.startswith("Missing")
+  stat:
+    path: "{{ install_dir }}/sqlite.db"
+  register: database_file
 
 - name: Install database  # noqa: no-changed-when - We want to always run this (it handles its own idempotency)
   shell:  # noqa: command-instead-of-shell - We need this to use `environment`
@@ -91,7 +91,10 @@
   environment:
     PYTHONPATH: "{{ install_dir }}"
   become_user: www-data
-  when: code_submitter_repo.changed or detect_database.changed  # noqa: no-handler - Use a handler to ensure execution order
+  when: |  # noqa: no-handler - Use a handler to ensure execution order
+    code_submitter_repo.changed or
+    database_file.stat.isreg is not defined or
+    not database_file.stat.isreg
 
 - name: Enable service
   service:
