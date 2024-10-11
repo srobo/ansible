@@ -1,0 +1,12 @@
+---
+- name: Install utils
+  apt:
+    pkg: nginx
+    update_cache: true
+    state: latest  # noqa: package-latest
+    cache_valid_time: 86400
+  with_items:
+    - htop
+    - iotop
+    - screen
+    - wget
