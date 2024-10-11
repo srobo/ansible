@@ -4,6 +4,11 @@
       - python3-virtualenv
       - python3-wheel
 
+- name: Install useful admin tools
+  apt:
+    pkg:
+      - sqlite3
+
 - name: Create install directory
   file:
     path: "{{ install_dir }}"
