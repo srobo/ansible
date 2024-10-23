@@ -8,6 +8,7 @@
     - geerlingguy.firewall
     - geerlingguy.ntp
     - geerlingguy.security
+    - common-utils
     - bee
 
 - name: Web proxies

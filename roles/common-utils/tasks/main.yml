@@ -1,0 +1,7 @@
+- name: Install utils
+  apt:
+    pkg:
+      - htop
+      - iotop
+      - screen
+      - wget
