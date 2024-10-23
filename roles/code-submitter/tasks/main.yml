@@ -21,7 +21,7 @@
     repo: https://github.com/PeterJCLaw/code-submitter
     dest: "{{ install_dir }}"
     force: true
-    version: 68c60c030d361f50d415f4e89a87b673a4ef5e4f
+    version: a9565062242dc07294d69a3fb90871202fd753bd
   notify:
     Restart code-submitter
   register: code_submitter_repo
@@ -48,7 +48,7 @@
 
 - name: Create credentials
   copy:
-    content: ""
+    content: "{}"
     dest: "{{ secrets_dir }}/code-submitter-credentials.yaml"
     owner: www-data
     force: false
