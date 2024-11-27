@@ -49,6 +49,7 @@ firewall_log_dropped_packets: false
 users:
  - jhoward
  - jsedensmith
+ - kkwiatek
  - plaw
 
 secrets_dir: /srv/secrets
