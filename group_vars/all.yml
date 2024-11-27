@@ -50,5 +50,6 @@ users:
  - jhoward
  - jsedensmith
  - plaw
+ - kkwiatek
 
 secrets_dir: /srv/secrets
