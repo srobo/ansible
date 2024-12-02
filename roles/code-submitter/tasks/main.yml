@@ -21,7 +21,7 @@
     repo: https://github.com/PeterJCLaw/code-submitter
     dest: "{{ install_dir }}"
     force: true
-    version: a9565062242dc07294d69a3fb90871202fd753bd
+    version: 64fe4518de75cc0a4df80fa0d7a805f5ac8e8fca
   notify:
     Restart code-submitter
   register: code_submitter_repo
