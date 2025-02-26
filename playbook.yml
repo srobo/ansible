@@ -24,8 +24,8 @@
     - clatd
     - discord-bot
 
-- name: Kit services
-  hosts: kitsvcs
+- name: Competition services
+  hosts: competitionsvcs
   roles:
     # TODO: Give this role a less machine-specific name
     - competitor-services-nginx

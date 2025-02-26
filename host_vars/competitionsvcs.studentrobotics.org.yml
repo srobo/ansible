@@ -1,5 +1,5 @@
 ---
-canonical_hostname: kitsvcs.studentrobotics.org
+canonical_hostname: competitionsvcs.studentrobotics.org
 secondary_hostnames:
   # Include our primary canonical hostname so that requests via the proxy there
   # aren't redirected. This is needed (rather than overriding the Host header
