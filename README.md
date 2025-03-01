@@ -46,8 +46,8 @@ to test any **HTTP** services they're running. Add the following line to
 
 ```
 192.168.56.56  sr-proxy sr-proxy.local
-192.168.56.57  sr-compsvc sr-compsvc.local
-192.168.56.58  sr-kitsvc sr-kitsvc.local
+192.168.56.57  sr-competitorsvcs sr-competitorsvcs.local
+192.168.56.58  sr-competitionsvcs sr-competitionsvcs.local
 ```
 
 You'll then be able to access the machines as if they were hosted. For example

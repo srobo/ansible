@@ -7,13 +7,13 @@ services. Currently this is just the [Code Submitter](../code-submitter/README.m
 
 1. Follow the [general instructions](../../README.md) for ansible development.
 
-2. Visit <https://sr-compsvc> in a browser (approve the self-signed local TLS
+2. Visit <https://sr-competitorsvc> in a browser (approve the self-signed local TLS
    certificate if needed), and confirm that you see a copy of the SR website
    (also check that you didn't get redirect to the real one!)
 
 3. Make your changes to [`templates/nginx.conf`](templates/nginx.conf)
 
-4. Reprovision the VM, thus deploying the changes: `vagrant provision sr-compsvc`
+4. Reprovision the VM, thus deploying the changes: `vagrant provision sr-competitorsvc`
 
 5. Refresh your browser and bask in the glory of your changes
 

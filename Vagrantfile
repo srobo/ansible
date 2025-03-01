@@ -14,8 +14,8 @@ Vagrant.configure(2) do |config|
 
     ansible.groups = {
       "webproxies" => ["sr-proxy"],
-      "competitorsvcs" => ["sr-compsvc"],
-      "kitsvcs" => ["sr-kitsvc"],
+      "competitorsvcs" => ["sr-competitorsvc"],
+      "competitionsvcs" => ["sr-competitionsvcs"],
     }
   end
 
@@ -27,23 +27,23 @@ Vagrant.configure(2) do |config|
     web.vm.hostname = "sr-proxy.local"
   end
 
-  config.vm.define "sr-compsvc" do |compsrv|
-    compsrv.vm.box = "ubuntu/jammy64"
+  config.vm.define "sr-competitorsvcs" do |competitorsrv|
+    competitorsrv.vm.box = "ubuntu/jammy64"
 
     # This name is what's looked up in the Ansible host_vars.
-    compsrv.vm.define "sr-compsvc"
+    competitorsrv.vm.define "sr-competitorsvcs"
 
-    compsrv.vm.network "private_network", ip: "192.168.56.57"
-    compsrv.vm.hostname = "sr-compsvc.local"
+    competitorsrv.vm.network "private_network", ip: "192.168.56.57"
+    competitorsrv.vm.hostname = "sr-competitorsvcs.local"
   end
 
-  config.vm.define "sr-kitsvc" do |kitsrv|
-    kitsrv.vm.box = "ubuntu/jammy64"
+  config.vm.define "sr-competitionsvcs" do |competitionsrv|
+    competitionsrv.vm.box = "ubuntu/jammy64"
 
     # This name is what's looked up in the Ansible host_vars.
-    kitsrv.vm.define "sr-kitsvc"
+    competitionsrv.vm.define "sr-competitionsvcs"
 
-    kitsrv.vm.network "private_network", ip: "192.168.56.58"
-    kitsrv.vm.hostname = "sr-kitsvc.local"
+    competitionsrv.vm.network "private_network", ip: "192.168.56.58"
+    competitionsrv.vm.hostname = "sr-competitionsvcs.local"
   end
 end
