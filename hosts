@@ -1,8 +1,12 @@
 competitorsvcs.studentrobotics.org
 monty.studentrobotics.org
+competitionsvcs.studentrobotics.org
 
 [webproxies]
 monty.studentrobotics.org
 
 [competitorsvcs]
 competitorsvcs.studentrobotics.org
+
+[competitionsvcs]
+competitionsvcs.studentrobotics.org
