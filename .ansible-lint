@@ -12,3 +12,4 @@ mock_roles:
   - geerlingguy.firewall
   - geerlingguy.ntp
   - geerlingguy.security
+  - geerlingguy.postgresql

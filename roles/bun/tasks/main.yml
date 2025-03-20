@@ -1,0 +1,17 @@
+- name: Download
+  ansible.builtin.get_url:
+    url: https://github.com/oven-sh/bun/releases/download/bun-v{{ bun_version }}/bun-linux-x64.zip
+    dest: /opt/bun.zip
+    mode: "0440"
+
+- name: Extract
+  ansible.builtin.unarchive:
+    src: /opt/bun.zip
+    dest: /opt
+    remote_src: true
+
+- name: Create executable
+  file:
+    src: /opt/bun-linux-x64/bun
+    dest: /usr/local/bin/bun
+    state: link

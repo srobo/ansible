@@ -9,3 +9,10 @@ secondary_hostnames:
 
 add_hsts_header: false
 certbot_create_if_missing: false
+
+postgresql_users:
+  - name: volunteersys
+
+postgresql_databases:
+  - name: volunteersys  # required; the rest are optional
+    owner: volunteersys
