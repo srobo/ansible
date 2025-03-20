@@ -29,4 +29,7 @@
   roles:
     # TODO: Give this role a less machine-specific name
     - competitor-services-nginx
+    - geerlingguy.postgresql
+    - bun
     - helpdesk-system
+    - volunteersys
