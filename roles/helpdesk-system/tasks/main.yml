@@ -23,7 +23,7 @@
     repo: https://github.com/srobo/helpdesk-system
     dest: "{{ install_dir }}"
     force: true
-    version: 5444a47b1a7d70b2bb6fbd9083d01438af769b68
+    version: 89c17fbfc5118c005666d35b06ee183e261263a6
   notify:
     Restart helpdesk-system
   register: helpdesk_system_repo
@@ -38,6 +38,7 @@
     mode: "0600"
   notify:
     Restart helpdesk-system
+  register: helpdesk_secret_key_file
 
 - name: Generate volunteer signup code
   copy:
@@ -48,11 +49,27 @@
     mode: "0600"
   notify:
     Restart helpdesk-system
+  register: helpdesk_volunteer_signup_code_file
+
+- name: Load secret key
+  ansible.builtin.slurp:
+    src: "{{ helpdesk_secret_key_file.dest }}"
+  register: helpdesk_secret_key_slurp
+
+- name: Load volunteer signup code
+  ansible.builtin.slurp:
+    src: "{{ helpdesk_volunteer_signup_code_file.dest }}"
+  register: helpdesk_volunteer_signup_code_slurp
+
+- name: Set generated facts
+  ansible.builtin.set_fact:
+    helpdesk_secret_key: "{{ helpdesk_secret_key_slurp.content | b64decode }}"
+    helpdesk_volunteer_signup_code: "{{ helpdesk_volunteer_signup_code_slurp.content | b64decode }}"
 
 - name: Install configuration
   template:
-    src: configuration.py
-    dest: "{{ install_dir }}/helpdesk/helpdesk/configuration.py"
+    src: helpdesk-system.env
+    dest: "{{ install_dir }}/.env"
     owner: www-data
     mode: "0600"
   notify:
@@ -71,7 +88,7 @@
   pip:
     # Latest at the time of writing. Don't actually care about the version,
     # only that we pin it for stability.
-    name: gunicorn==21.2.0
+    name: gunicorn==23.0.0
     virtualenv: "{{ venv_dir }}"
   notify:
     Restart helpdesk-system
