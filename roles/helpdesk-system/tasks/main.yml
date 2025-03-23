@@ -38,7 +38,6 @@
     mode: "0600"
   notify:
     Restart helpdesk-system
-  register: helpdesk_secret_key_file
 
 - name: Generate volunteer signup code
   copy:
@@ -49,22 +48,6 @@
     mode: "0600"
   notify:
     Restart helpdesk-system
-  register: helpdesk_volunteer_signup_code_file
-
-- name: Load secret key
-  ansible.builtin.slurp:
-    src: "{{ helpdesk_secret_key_file.dest }}"
-  register: helpdesk_secret_key_slurp
-
-- name: Load volunteer signup code
-  ansible.builtin.slurp:
-    src: "{{ helpdesk_volunteer_signup_code_file.dest }}"
-  register: helpdesk_volunteer_signup_code_slurp
-
-- name: Set generated facts
-  ansible.builtin.set_fact:
-    helpdesk_secret_key: "{{ helpdesk_secret_key_slurp.content | b64decode }}"
-    helpdesk_volunteer_signup_code: "{{ helpdesk_volunteer_signup_code_slurp.content | b64decode }}"
 
 - name: Install configuration
   template:
