@@ -2,7 +2,7 @@
 
 App for managing volunteers at a competition.
 
-This is a deployment of <https://github.com/Alexbruvv/volunteersys/>.
+This is a deployment of <https://github.com/Alexbruvv/volunteersys/>, which listens on port 3000.
 
 ## Additional configuration
 
