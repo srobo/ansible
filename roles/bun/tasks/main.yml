@@ -1,7 +1,7 @@
 - name: Download
   ansible.builtin.get_url:
     url: https://github.com/oven-sh/bun/releases/download/bun-v{{ bun_version }}/bun-linux-x64.zip
-    checksum: "sha256:{{ bun_checksum }}"
+    checksum: sha256:{{ bun_checksum }}
     dest: /opt/bun.zip
     mode: "0440"
 
