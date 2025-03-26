@@ -43,7 +43,7 @@
   copy:
     force: false
     content: "{{ lookup('community.general.random_string', length=50, special=False) }}"
-    dest: "{{ volunteersys_secrets_dir }}/volunteer-signup-code.txt"
+    dest: "{{ volunteersys_secrets_dir }}/jwt.txt"
     owner: "{{ user }}"
     mode: "0600"
   notify:
