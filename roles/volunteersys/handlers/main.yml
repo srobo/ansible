@@ -1,0 +1,4 @@
+- name: Restart volunteersys
+  service:
+    name: volunteersys
+    state: restarted

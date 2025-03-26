@@ -1,0 +1,4 @@
+install_dir: /srv/volunteersys
+user: volunteersys
+volunteersys_secrets_dir: "{{ secrets_dir }}/volunteersys"
+volunteersys_port: 3000

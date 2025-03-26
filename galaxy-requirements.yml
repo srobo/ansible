@@ -7,3 +7,4 @@ roles:
   - src: geerlingguy.ntp
   - src: geerlingguy.security
   - src: geerlingguy.certbot
+  - src: geerlingguy.postgresql

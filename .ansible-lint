@@ -11,4 +11,5 @@ mock_roles:
   - geerlingguy.certbot
   - geerlingguy.firewall
   - geerlingguy.ntp
+  - geerlingguy.postgresql
   - geerlingguy.security

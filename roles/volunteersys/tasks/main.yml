@@ -1,0 +1,112 @@
+- name: Create user
+  user:
+    name: "{{ user }}"
+    groups:
+    shell: /usr/sbin/nologin
+    state: present
+
+- name: Create install directory
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    mode: "755"
+
+- name: Create secrets directory
+  file:
+    path: "{{ volunteersys_secrets_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    mode: "0700"
+
+- name: Download
+  git:
+    repo: https://github.com/Alexbruvv/volunteersys
+    dest: "{{ install_dir }}"
+    force: true
+    version: 903f81151b32b7b13190bda5c7da1f7974064a11
+  register: volunteersys_repo
+  become_user: "{{ user }}"
+  notify:
+    Restart volunteersys
+
+- name: Install dependencies  # noqa: no-changed-when
+  command:
+    argv:
+      - bun
+      - install
+    chdir: "{{ install_dir }}"
+  become_user: "{{ user }}"
+  when: volunteersys_repo.changed  # noqa: no-handler
+
+- name: Generate JWT secret
+  copy:
+    force: false
+    content: "{{ lookup('community.general.random_string', length=50, special=False) }}"
+    dest: "{{ volunteersys_secrets_dir }}/volunteer-signup-code.txt"
+    owner: "{{ user }}"
+    mode: "0600"
+  notify:
+    Restart volunteersys
+  register: volunteersys_jwt_secret_file
+
+- name: Load JWT secret
+  ansible.builtin.slurp:
+    src: "{{ volunteersys_jwt_secret_file.dest }}"
+  register: volunteersys_jwt_secret_slurp
+
+- name: Set generated facts
+  ansible.builtin.set_fact:
+    volunteersys_jwt_secret: "{{ volunteersys_jwt_secret_slurp.content | b64decode }}"
+
+- name: Install configuration
+  template:
+    src: volunteersys.env
+    dest: "{{ install_dir }}/.env"
+    mode: "0600"
+    owner: "{{ user }}"
+  notify:
+    Restart volunteersys
+
+- name: Create credentials
+  copy:
+    content: ""
+    dest: "{{ volunteersys_secrets_dir }}/secrets.env"
+    owner: "{{ user }}"
+    force: false
+    mode: "0600"
+  notify:
+    Restart volunteersys
+
+- name: Run migrations  # noqa: no-changed-when
+  command:
+    argv:
+      - bun
+      - prisma
+      - migrate
+      - deploy
+    chdir: "{{ install_dir }}"
+  become_user: "{{ user }}"
+  when: volunteersys_repo.changed  # noqa: no-handler
+
+- name: Install systemd service
+  template:
+    src: volunteersys.service
+    dest: /etc/systemd/system/volunteersys.service
+    mode: "0644"
+  notify:
+    Restart volunteersys
+
+- name: Install nginx config
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/locations-enabled/volunteersys
+    mode: "0644"
+  notify:
+    Reload nginx
+
+- name: Enable service
+  service:
+    name: volunteersys
+    state: started
+    enabled: true
