@@ -5,14 +5,20 @@
     dest: /opt/bun.zip
     mode: "0440"
 
+- name: Create extract directory
+  file:
+    path: /opt/bun
+    state: directory
+    mode: "755"
+
 - name: Extract
   ansible.builtin.unarchive:
     src: /opt/bun.zip
-    dest: /opt
+    dest: /opt/bun
     remote_src: true
 
 - name: Create executable
   file:
-    src: /opt/bun-linux-x64/bun
+    src: /opt/bun/bun-linux-x64/bun
     dest: /usr/local/bin/bun
     state: link
