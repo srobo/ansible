@@ -23,7 +23,7 @@
     repo: https://github.com/srobo/helpdesk-system
     dest: "{{ install_dir }}"
     force: true
-    version: 5444a47b1a7d70b2bb6fbd9083d01438af769b68
+    version: 09ab3fff31eedf91c87c54e064e54b74363dd492
   notify:
     Restart helpdesk-system
   register: helpdesk_system_repo
@@ -51,8 +51,8 @@
 
 - name: Install configuration
   template:
-    src: configuration.py
-    dest: "{{ install_dir }}/helpdesk/helpdesk/configuration.py"
+    src: helpdesk-system.env
+    dest: "{{ install_dir }}/.env"
     owner: www-data
     mode: "0600"
   notify:
@@ -71,7 +71,7 @@
   pip:
     # Latest at the time of writing. Don't actually care about the version,
     # only that we pin it for stability.
-    name: gunicorn==21.2.0
+    name: gunicorn==23.0.0
     virtualenv: "{{ venv_dir }}"
   notify:
     Restart helpdesk-system
