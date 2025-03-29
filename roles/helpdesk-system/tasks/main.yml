@@ -23,7 +23,7 @@
     repo: https://github.com/srobo/helpdesk-system
     dest: "{{ install_dir }}"
     force: true
-    version: 09ab3fff31eedf91c87c54e064e54b74363dd492
+    version: b058d814ba93ad721b9532e9b0c35793ebfef79b
   notify:
     Restart helpdesk-system
   register: helpdesk_system_repo
