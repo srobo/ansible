@@ -24,7 +24,7 @@
     repo: https://github.com/Alexbruvv/volunteersys
     dest: "{{ install_dir }}"
     force: true
-    version: 903f81151b32b7b13190bda5c7da1f7974064a11
+    version: 1e65438354363abd33e6a45d5d5b08cca1550df6
   register: volunteersys_repo
   become_user: "{{ user }}"
   notify:
@@ -43,7 +43,7 @@
   copy:
     force: false
     content: "{{ lookup('community.general.random_string', length=50, special=False) }}"
-    dest: "{{ volunteersys_secrets_dir }}/volunteer-signup-code.txt"
+    dest: "{{ volunteersys_secrets_dir }}/jwt.txt"
     owner: "{{ user }}"
     mode: "0600"
   notify:
