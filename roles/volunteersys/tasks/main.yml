@@ -24,7 +24,7 @@
     repo: https://github.com/Alexbruvv/volunteersys
     dest: "{{ install_dir }}"
     force: true
-    version: 23718882ab8d3f00136d598089927f8a6dffc9cc
+    version: 8d7828eef794c14392660e9fa365463bfa66c0d4
   register: volunteersys_repo
   become_user: "{{ user }}"
   notify:
