@@ -21,7 +21,7 @@ enable_srcomp_proxy: true
 srcomp_proxy_hostname: srcomp.studentrobotics.org
 # Override serving of the root url to be the competition mode homepage instead
 # of the normal one.
-enable_competition_homepage: true
+enable_competition_homepage: false
 
 # We typically only host the competitor services for the duration of the
 # competition year.
