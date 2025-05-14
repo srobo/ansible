@@ -4,13 +4,13 @@ After=network.target
 
 [Service]
 User=discord
-
 Type=simple
-
 WorkingDirectory={{ install_dir }}
 RuntimeDirectory=discord-bot
-
 ExecStart={{ venv_dir }}/bin/python -m sr.discord_bot
+
+Restart=always
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
