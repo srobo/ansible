@@ -10,7 +10,6 @@ WorkingDirectory={{ install_dir }}
 ExecStart=/usr/local/bin/bun run src/main.ts
 
 Restart=always
-RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
