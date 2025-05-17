@@ -32,3 +32,27 @@ jobs:
 
       - name: Run linters
         run: ./scripts/lint.sh
+
+  vagrant:
+    # macOS runners support nested virtualization
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        vm: [sr-proxy, sr-competitorsvcs, sr-competitionsvcs]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Vagrant boxes
+        uses: actions/cache@v4
+        with:
+          path: ~/.vagrant.d/boxes
+          key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+          restore-keys: |
+            ${{ runner.os }}-vagrant-
+
+      - name: Show Vagrant version
+        run: vagrant --version
+
+      - name: Run vagrant up
+        run: vagrant up ${{ matrix.vm }}
