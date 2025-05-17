@@ -35,7 +35,7 @@ jobs:
 
   vagrant:
     # macOS runners support nested virtualization
-    runs-on: macos-13
+    runs-on: macos-14
     strategy:
       fail-fast: false
       matrix:
