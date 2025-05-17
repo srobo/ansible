@@ -51,6 +51,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-vagrant-
 
+      - name: Install vagrant
+        run: |
+          brew tap hashicorp/tap
+          brew install hashicorp/tap/hashicorp-vagrant
+
+
       - name: Show Vagrant version
         run: vagrant --version
 
