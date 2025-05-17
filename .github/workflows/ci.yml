@@ -55,7 +55,7 @@ jobs:
         run: |
           brew tap hashicorp/tap
           brew install hashicorp/tap/hashicorp-vagrant
-
+          brew install --cask virtualbox
 
       - name: Show Vagrant version
         run: vagrant --version
