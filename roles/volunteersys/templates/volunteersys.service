@@ -9,5 +9,7 @@ EnvironmentFile={{ volunteersys_secrets_dir }}/secrets.env
 WorkingDirectory={{ install_dir }}
 ExecStart=/usr/local/bin/bun run src/main.ts
 
+Restart=always
+
 [Install]
 WantedBy=multi-user.target

@@ -12,5 +12,7 @@ RuntimeDirectory=discord-bot
 
 ExecStart={{ venv_dir }}/bin/python -m sr.discord_bot
 
+Restart=always
+
 [Install]
 WantedBy=multi-user.target
