@@ -10,7 +10,7 @@ Type=simple
 WorkingDirectory={{ install_dir }}
 RuntimeDirectory=discord-bot
 
-ExecStart={{ venv_dir }}/bin/python -m sr.discord_bot
+ExecStart={{ venv_dir }}/bin/python -m sr.discord_bot run
 
 Restart=always
 
