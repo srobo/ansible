@@ -23,7 +23,7 @@
     repo: https://github.com/srobo/discord-bot
     dest: "{{ install_dir }}"
     force: true
-    version: 668a7b66c8bd77f84a0ee989d2924a87d92f856e
+    version: c0a6b692e5c5ffec33f21a6968e19274b94cc692
   notify:
     Restart discord-bot
   register: discord_bot_repo
