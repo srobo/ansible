@@ -51,5 +51,6 @@ users:
  - jsedensmith
  - kkwiatek
  - plaw
+ - acolville
 
 secrets_dir: /srv/secrets
