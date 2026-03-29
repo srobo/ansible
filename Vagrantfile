@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
 
   # This name is what's looked up in the Ansible host_vars.
   config.vm.define "sr-proxy" do |web|
-    web.vm.box = "ubuntu/focal64"
+    web.vm.box = "bento/ubuntu-24.04"
 
     web.vm.network "private_network", ip: "192.168.56.56"
     web.vm.hostname = "sr-proxy.local"
