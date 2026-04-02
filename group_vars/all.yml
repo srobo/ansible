@@ -19,9 +19,11 @@ certbot_create_standalone_stop_services:
 # competition homepage.
 enable_srcomp_proxy: true
 srcomp_proxy_hostname: srcomp.studentrobotics.org
-# Override serving of the root url to be the competition mode homepage instead
-# of the normal one.
-enable_competition_homepage: false
+
+# Regular expressions which operate on ISO8601 dates for when to enable
+# the competition homepage.
+competition_homepage_patterns:
+ - ^2026-04-1[1-3]  # 11th-13th April 2026
 
 # We typically only host the competitor services for the duration of the
 # competition year.
