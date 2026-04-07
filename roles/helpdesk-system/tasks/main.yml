@@ -23,7 +23,7 @@
     repo: https://github.com/srobo/helpdesk-system
     dest: "{{ install_dir }}"
     force: true
-    version: 22f08c5b9d3a9be2e9ad4769660765c76fc55bb3
+    version: af4b935ec5c0b3c50ac30d01c4edf0b10c323f17
   notify:
     Restart helpdesk-system
   register: helpdesk_system_repo
@@ -71,7 +71,7 @@
   pip:
     # Latest at the time of writing. Don't actually care about the version,
     # only that we pin it for stability.
-    name: gunicorn==23.0.0
+    name: gunicorn==25.3.0
     virtualenv: "{{ venv_dir }}"
   notify:
     Restart helpdesk-system
