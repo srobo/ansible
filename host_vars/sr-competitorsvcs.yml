@@ -1,7 +1,7 @@
 ---
 # This is a dev VM created by Vagrant.
 
-canonical_hostname: sr-competitorsvc
+canonical_hostname: sr-competitorsvcs
 secondary_hostnames:
   # See explanation in host_vars/competitorsvcs.studentrobotics.org.yml for why
   # we include the proxy hostname here.
